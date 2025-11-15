@@ -14,7 +14,7 @@ using namespace std;
 
 
 TArray<FTransform> USpiralBuilderLibrary::BuildRenderedJson(
-	FVector meshOffset, float meshDivider, FString JsonPath, TArray<FVector>& colours, TArray<float>& opacities, TArray<FTransform>& hism1Transforms)
+	FVector meshOffset, float meshDivider, FString JsonPath, TArray<FVector>& colours, TArray<float>& opacities, TArray<FTransform>& hism1Transforms, int maxAssets)
 {
 	string stdJsonPath = string(TCHAR_TO_UTF8(*JsonPath));
 
@@ -26,8 +26,16 @@ TArray<FTransform> USpiralBuilderLibrary::BuildRenderedJson(
 	json jsonFile;
 	f >> jsonFile;
 
-	for (int i = 0; i < jsonFile.size(); i++)
+	auto assetsCount = jsonFile.size();
+	UE_LOG(LogTemp, Display, TEXT("maxAssets: %d, jsonFile: %d"), maxAssets, jsonFile.size());
+	if (assetsCount > maxAssets) {
+		UE_LOG(LogTemp, Warning, TEXT("Some of the assets will be truncated!"));
+	}
+
+	for (int i = 0; i < assetsCount; i++)
 	{
+		if (i >= maxAssets)
+			break;
 		auto asset = jsonFile[i]["asset"];
 		float red = asset["r"];
 		float green = asset["g"];

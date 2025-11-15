@@ -18,5 +18,5 @@ class USpiralBuilderLibrary : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category = Spiral)
 	static TArray<FTransform> BuildRenderedJson(
-		FVector meshOffset, float meshDivider, FString JsonPath, TArray<FVector>& colours, TArray<float>& opacities, TArray<FTransform>& hism2Transforms);
+		FVector meshOffset, float meshDivider, FString JsonPath, TArray<FVector>& colours, TArray<float>& opacities, TArray<FTransform>& hism2Transforms, int maxAssets = 1000000);
 };
